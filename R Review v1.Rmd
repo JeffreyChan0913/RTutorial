@@ -1,0 +1,1317 @@
+---
+title: "R Review v2"
+author: "JEFFREY CHAN"
+date: "12/5/2020"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r cars}
+#####                   RStudio functions Key note                    #####
+# Install package
+# install.packages("package.name")
+
+# To use the library / package, we need to load the package
+# library(package.name)
+
+# Load build in data set to RStudio (to be exact, we call is as environment)
+# If you are simply using the console, it is called virtual environment
+# data(data.set.name)
+
+# Read the documentation about a function
+# ?function.name, the documentation will display on help window.
+# It is located at the bottom right of your RStudio
+?sum()
+
+?class()
+# Data type
+# There are 4 data types
+# 1: character, "A", "UCSB". everything related to words, it is character
+# 2: numeric:there are 2 types, Numeric (is also called decimal), and Integer
+# Integer is a sub category of Numeric
+            # Numeric: 1.2131, 2342.32423. 235653462.12356 
+              # Integer: 1 ,2 ,3 ,4 ,5 ... n
+# 3: Logical a.k.a (boolean): TRUE and FALSE
+# 4: Complex values a.k.a (imaginary number) : 3+2i 
+
+# 5 main type of data structures
+# 1: Scalar
+  # It refers to a single value
+# 2: Vector 
+  # It refers to a set of numbers in "ONE ROW" 
+    #for example : 1 2 3 4 5 6 7 8 9 10
+# 3: Matrix(object.name)
+  # It refers to 2 dimensional set of numbers that represents in row and col
+    #         Matrix A          Matrix B
+    #       [,1] [,2]         [,1] [,2]
+    # [1,]    1    2    [1,]   2   3
+    # [2,]    3   4    [2,]    4   5
+# Here is a cut off point because, Scalar, Vector, Matrix, can only contain
+# the "SAME" data type. If it is numeric, then the entire data structures
+# will only contain numbers
+# If there is one character in matrix or vector, it will convert to 
+# character data type. So do logic. the entire data structure will be either
+# T or F
+
+# 4: data.frame(object.name,object.name2, object.name3,object.name.n)
+  # It's simply a 2D matrix exactly a excel spread sheet, 
+  # It can hold different type of data types
+  # It can mix with numeric, logical, character... 
+  # There are few rules:
+        #all vectors have to be same length
+        #all entries will be in vector format
+        #variable names have to be unique 
+# 5: list(object.name, object.name2, object.name3, object.name.n)
+  # list is the most flexible data structure in R
+  # it can be anything, at any size 
+  # object.name can be a vector
+  # object.name2 can be a matrix
+  # object.name 3 can be another list 
+
+# Let's talk about the how coding works.Specifically in R.
+# Everything in R is an object. For example, in math, f(x) = ... 
+# F(x) we call it as a function. So do R. When you see something in this form
+# something(), you should expect it is a function. A word immediate followed by
+# a () is a function. So class(), sum(), mean(), and etc... Are a function.
+# You will see a lot of time that I use object / data in side ( ). 
+# So what goes in the ()? you can think of an argument, which I would call it as
+# object. Some functions only take 1 object. Sometimes a function will take 
+# object, and some more setting. For example, you buy an Iphone and you are
+# expecting it to make phone calls, but also do install apps, and listen to 
+# musics, those are the setting. 
+# Along this guide you will able to see a lot clear. 
+# Next, lets talk about the structure. If you see the following format 
+# something <- function()
+# something.name.something = function()
+# Those are assigning values to an object.
+# Everything in front of this sing "<-" is an object
+# "<-" and "=" is the operator that tells R to store the value to the object
+# everything after assignment operator will be consider as a function
+# So remember: "object" "assignment operator" "function". 
+# Just like Subject verb object in English
+# lastly, you will see a multiple lines of function() like this
+# (tempArr <- array(c(1:9),c(3,3,1), dimnames = list(paste("Row", 1:3),
+#                                               (paste("Col", 1:3)))))
+# Well, remember that, everything in front of the assignment operator is an
+# object. And you already know <- is an assignment operator, and obviously
+# everything after the <- is a function. Some functions do not only take one 
+# object. They will also come with multiple objects or settings just like 
+# the one above. So dont panic, it just has more functionality for that function
+# You will see more in the upcoming page.
+
+# To visualize the code below, i will use the round bracket to print out the
+# outcome of the code in knit version. In your application, it is not 
+# necessary to do so
+# For example:
+# (object <- function())
+
+# Let get started 
+# A heads up, when I am referring to an object or object.name, they are simply
+# the same thing. Ignore the function that you have not been introduced. 
+# You will be seeing those function just in a moment. Let's introduce you 
+# a few useful generic functions. 
+# Remember this structure, object "assignment operator" function()
+
+# We can use class(object.name) function to identify the "data type" 
+# Let's create 2 character with c function and assign it to
+# practice.class.function
+(practice.class.function <- c("A","B"))
+
+# Apply class(object.name)
+(class(practice.class.function))
+
+# Get the summary of an object with str(object.name)
+(str(practice.class.function))
+
+# Also, we can save sometime to put a function in a function 
+# let's see an example with the class function
+(str(practice.class.function <- c("A","B")))
+
+# Check if an object is a specific data structure that you specified
+# is.dataStructure(object.name) you would like to check return value will be
+# True or False
+# Data structure lists, following are not all of them, but is.datastructure()
+# is the generic form to check the data structure of an object that works 
+# for eveything. As long as it has a data type
+# is.vector(object.name)
+# is.matrix(object.name)
+# is.list(object.name)
+# is.data.frame(object.name)
+# is_tibble(object.name)
+
+(is.matrix(practice.class.function))
+(is.vector(practice.class.function))
+
+# Use " <- " or " = " to assign value to a variable 
+# Both of them work well, but in R community most of them are using <-
+# So we just follow
+(assignValue <- 5)
+(assignValue = "A")
+
+# seq(lower bound, upper bound, increment)
+# Lower bound is 1, upper bound is 2, and the increment is 0.2
+# note that [lower bound, upper bound] is the interval, both are bounds
+# are included. Therefore we start with 1 and end with 2.
+# expected output 1, 1.2, 1.4, 1.6, 1.8, 2.0 
+# if you have prior coding experience, it is similar to for loop. 
+(seq(1,2,0.2))
+
+# We can create a equal spaced number set.
+# For example if our lower bound is 0, upper bound is = 1, equal space =5
+# Dont forget, when we set lower/upper bound,
+# We include [lower bound, upper bound]
+# We should expect 0,0.25,0.5,0.75,1 total of 5 numbers
+(seq(0,1,length.out=5))
+
+# rep( object.name/ value range/ value, frequency for the value range to occur)
+(rep(1:2,5))
+
+# rep() function also has a length.out setting
+# When you set length.out to a number, it will print the number of times
+# seq() function also has length.out setting but they will create equal spaced
+# number, but in rep(), length.out represents the NUMBER of NUMBER will be 
+# printed. 
+# For example rep(0:1,length.out=5)
+# It will only display 5 values starting from 0.
+# expected outcome 0 1 0 1 0 
+(rep(0:1,length.out=5))
+
+# Number creation, works for vector, array, matrix wit c()
+# c = create 
+(c(1))
+
+#####                   Vector                    #####
+# The : referring to a range [1:6] means 1,2,3,4,5,6
+(c(1:6))
+
+# Assigning values to an object that takes 1 2 3 
+(vec <- c(1:3))
+
+# We can check the length of a vector length(object.name)
+(length(vec))
+
+# Let's check the data type
+(class(vec))
+
+# Print the same vector twice
+(rep(vec, 2))
+
+# Apply str() on vec
+(str(vec))
+
+#####                   Matrix Creation                   #####
+# Matrix(data, row, col, byrow = T/ F)
+# IMPORTANT key point, in matrix() byrow has a default value
+# of  F.
+# So when we creating a vector, it will fill the vector col by col
+(mat_byrow_default_value_is_false <- matrix(c(1:9), 3,3))
+
+# Let's fill the vector by row by setting byrow = T
+(mat_by_row_set_to_ture <- matrix(c(1:9),nrow =3, ncol =3,
+                                  byrow =T))
+
+# When you know the what will the function take, you can use the short form
+# For example, i know matrix function will take data, row, col, and byrow
+# in this order, so as long as I provide the right setting, it wont throw
+# error. To use the short cut version, you will need to know what the function
+# take and the setting order. 
+(mat_byrow_set_to_true <- matrix(c(1:9), 3,3,T))
+
+# Check number of row and col with nrow(object) / ncol (object)
+# n stands for number of row / col 
+(nrow(mat_byrow_set_to_true))
+(ncol(mat_byrow_set_to_true))
+# We can also use dim(object) to check the dimension
+# It returns 2 numbers, row by col 
+(dim(mat_byrow_set_to_true))
+
+# There is a function that can combine vectors as matrix
+# Recall seq(low_bound, upper_bound, increment)
+(row1vec <- seq(1,3,1)) #lower bound is 1, upper bound is 3, increment is 1
+(row2vec <- seq(4,6,1))
+(row3vec <- seq(7,9,1))
+
+# rbind(object.name) is a row binding function. order of the object matters. 
+# cbind(object.name) is a col binding function. order of the object matters
+
+(bindmatrix <- rbind(row1vec, row2vec, row3vec))
+
+# As you can see the row names will inherit from the variable name.
+# We can change the name for the col, paste("Col",1:ncol(bindmatrix)) 
+# it looks fancy but it's a short cut.
+# colnames(bindmatrix) <- paste("Col",1:ncol(bindmatrix))
+# paste function will add(what ever inside the Parentheses) to the object.
+# Im calling colanmes function, passing bindmatrix as an object to it
+# so R will know im working on bindmatrix object
+# Next, im calling paste function to  add "Col", with a number that I define.
+# Here is the trick, remember " : " means range, 1 to the number of col that
+# bindmatrix has. Without checking the number of col, i can just apply ncol().
+(colnames(bindmatrix) <- paste("Col",1:ncol(bindmatrix)))
+
+# Lets combine cols 
+(colvec1 <- seq(1,7,3))
+(colvec2 <- seq(2,8,3))
+(colvec3 <- seq(3,9,3))
+
+# Magic starts to happen
+# im store a new matrix by combining 3 vector thru col binding function
+# and assign it to bindmatrix2 
+(bindmatrix2 <- cbind(colvec1,colvec2,colvec3))
+
+#lets change the name for the row,
+#recall nrow will return the # of row that the object has
+(rownames(bindmatrix2) <- paste("Row",1:nrow(bindmatrix2)))
+(bindmatrix2)
+
+#####                   Array                   #####
+# Array(data, c(row,col,layers),dimnames (default is NULL))
+#                     dimnames must be a list        
+# IMPORTANT array will go by col not row
+# The difference between Array and Matrix is, Array is in 3D, Matrix is in 2D.
+# 2D means x y plane. 3D means x-y-z plane in calculus 3. Dont panic, there 
+# is no calculus in this guide. And in array, I will calling the z plane as 
+# layers
+
+# Example
+#                         3 row, 3 col, and 1 layer. its representing this is 
+# also a type of matrix by we define it as array.
+(tempArr <- array( data = c(1:9), dim = c(3,3,1),
+                 dimnames = list(paste("Row", 1:3),
+                                 (paste("Col", 1:3)))))
+
+# Short cut version to define array
+# array(data = NA, dim = length(data), dimnames = NULL)
+
+(tempArr1 <- array(c(1:9),c(3,3,1),list(paste("Row", 1:3),
+                (paste("Col", 1:3)))))
+
+# Lets create a higher dimension array
+(tempArr1 <- array(c(1:12),c(2,2,3),list(paste("Row", 1:2),
+                                        (paste("Col", 1:2)))))
+# As you can see , , 1 / , , 2 / , , 3.
+# Those are the layers name
+
+# Another way to create a vector / matrix / array. 
+# focusing on data selection. We can use pre define object as data 
+# and assign predefined object as vector / matrix / array data
+# Vector example
+
+data = c(1:9)
+(exampleVec <- data)
+
+# Matrix example
+# T is referring to byrow set to True. T is shortcut of True.
+(exampleMat <- matrix(data,3,3,T))
+
+# array example
+(exampleArray<- array(data,c(3,3,1)))
+
+# IMPORTANT properties for vector, matrix, and array
+# vector, matrix, and array must be the same data type
+# either numeric (integer, decimal), or characters
+# proof
+(vectorNum<-c(1:3))
+(str(vectorNum))
+# Now if i add a character to the fourth position
+(vectorNum[4] <- "A")
+(str(vectorNum))
+# It turns out a character
+
+# Lets try matrix 
+data1<- c(1:9)
+(str(mat_byrow_set_to_true <- matrix(data1, 3,3,T)))
+(str(mat_byrow_set_to_true))
+# Pay attention to the values, they dont have any quoation around the values
+(mat_byrow_set_to_true)
+# Replacing value 5 to "A"
+(mat_byrow_set_to_true[2,2] <- "A")
+# Now, all the values are surrounded by " ", " " means charactor 
+(mat_byrow_set_to_true)
+(str(mat_byrow_set_to_true))
+
+#####            Accessing values from vector, matrix, and array      #####
+# The method works with all of them
+(access.data.by.position.vector.example <- c(10:20))
+# Let's access data 10, and 14
+(access.data.by.position.vector.example[1])
+(access.data.by.position.vector.example[5])
+
+# By range
+(access.data.by.position.vector.example [1:5])
+(access.data.by.position.vector.example [2:8])
+
+# Print certain values by selecting the position
+(access.data.by.position.vector.example [c(2,4,6,8,10)])
+
+# Dropping a value by using " - " sign
+# Temporary remove the first value
+(access.data.by.position.vector.example [-1])
+(access.data.by.position.vector.example)
+
+# Temporary remove multiple values
+(access.data.by.position.vector.example [-c(1,3,5,7,9)])
+
+# What if you want to create a new vector by dropping first and last value?
+(new.vec <-access.data.by.position.vector.example [-c(1,11)])
+
+# It is slightly different from accessing value thru vector because now we are
+# in 2 dimension environment imagine we are looking at a x y plane. you should
+# be able to visualize the picture
+(access.data.by.position.matrix.example <- matrix(c(1:9),3,3,T))
+# Lets print the matrix so we can see better
+# Assign row and col names 
+(rownames(access.data.by.position.matrix.example) <- paste("Row",1:3))
+(colnames(access.data.by.position.matrix.example) <- paste("Col",1:3))
+(access.data.by.position.matrix.example)
+
+# If we want to access 5, from the matrix setting with 3 by 3
+# IMPORTANT note: access.data.by.position.matrix.example has a T byrow setting
+# so everything will be going by row. It will be different when byrow = F
+# Let's see the grid for byrow =T and byrow = F
+(byrow.T <- matrix(c(1:9),3,3,T))
+(byrow.F <- matrix(c(1:9),3,3,F))
+# Notation to access value from matrix object.name[row, col]
+# If I would like to access value 2,
+# For byrow.T, we will access row 1 col 2, byrow.T[1,2]
+# For byrow.F, we will access row 2 col 1  byrow.F[2,1]
+
+# Example 
+(access.data.by.position.matrix.example)
+# 5 will be at row 2 col 2 so 
+(access.data.by.position.matrix.example[2,2])
+# 7 is located row 3 col 1
+(access.data.by.position.matrix.example[3,1])
+
+# Access the entire first row. I need to tell R to access first row
+# [row, col] when we empty the row / col, it implies you want everything
+# Since we want the entire first row, which implies that all cols must be
+# printed
+(access.data.by.position.matrix.example[1,])
+# I want everything from col 3
+(access.data.by.position.matrix.example[,3])
+
+# Following line of code might be confusing, but you can use c function to
+# select values. When you apply c function to select values, the matrix has
+# transposed, which means they follow byrow =F grid 
+# It follows the following gird
+# Note: IT ONLY WORKS WHEN YOU ARE USING C FUNCTION TO SELECT VALUES
+# Here is the grid for selecting values by c function
+(access.data.by.c.function.matrix.example<- matrix(c(1:9),3,3))
+
+# Now by using c function to select values from matrix
+(access.data.by.position.matrix.example <- matrix(c(1:9),3,3,T))
+# Grid indexing for selecting values by c function
+(grid.mat<- matrix(c(1:9),3,3))
+
+# I would like to print 1 4 7 3 6 9 
+# From the grid.mat, 1 4 7 3 6 9, is located 1, 2, 3, 7, 8, 9
+(access.data.by.position.matrix.example[c(1,2,3,7,8,9)])
+
+# Consider one thing, when you are extracting values from the matrix,
+# it is printed in row form, why? because it has converted the matrix values
+# to a vector check this out
+(is.vector(access.data.by.position.matrix.example[,3]))
+
+# We can also modify the value
+((access.data.by.position.matrix.example[2,2] <-"UCSB"))
+(access.data.by.position.matrix.example)
+# Also compare with the original matrix, the values do not have " " 
+# It is because after adding UCSB, the matrix's data type has converted to
+# Character from numeric
+
+# Few more functions for matrix
+# We can transpose a matrix. transpose = row becomes col, and col becomes row
+# t() this is the function to transpose a matrix
+(mat.for.transpose <- matrix(c(1:16),4,4,T))
+# Linear algebra properties. in LA, to transpose a matrix, it has to be 
+# a squared matrix. for example, n = m. which refers to row has to be the same
+# col otherwise, it cannot be transposed. Also, the values along the diagonal,
+# will not be affected. 
+
+(t(mat.for.transpose))
+
+# Multiplying matrix 
+# non linear algebra version 
+# Lets create a small matrix 
+(mat.for.multiplying.1 <- matrix(c(1:4),2,2,T))
+(mat.for.multiplying.2 <- matrix(c(2:5),2,2,T))
+(mat.for.multiplying.1 * mat.for.multiplying.2)
+
+# Linear algebra method 
+(mat.for.multiplying.1 %*% mat.for.multiplying.2)
+# If you have not take linear algebra, here is how it works
+#         Matrix A          Matrix B
+#       [,1] [,2]         [,1] [,2]
+# [1,]    1    2    [1,]   2   3
+# [2,]    3   4    [2,]    4   5
+
+# When linear.algebra.mat.1 multiply linear.algebra.mat.2
+# row 1 col 1 = matrix A first row times matrix B the first col
+# row 1 col 2 = matrix A first row times matrix B the second col
+# row 2 col 1 = matrix A second row times matrix B the first col
+# row 2 col 2 = matrix A second row times matrix B the second col
+
+# 1*2 + 2*4 = 10,  1*3 + 2*5 = 13
+# 3*2 + 4*4 = 22, 3*3 + 4*5 =29
+
+# So expected out come should be 
+#       [,1] [,2] 
+#[1,]    10    13
+#[2,]    22    29 
+
+
+# Diagonal of a matrix
+(mat.for.multiplying.1)
+(diag(mat.for.multiplying.1)) #remember it returns as vector
+
+# diag is very useful, specifically for eigenvalues and eigenvectors. 
+# It is also used for machine learning as well
+
+
+# Let work on array accessing element
+# array printing values by position
+# Since you know how to access data from a matrix, it is just the same but
+# Recall, matrix is 2 dimensional. However, array is in 3 dimensional.
+# Recall array function, array(data, c(row,col,layers), dimnames)
+# So the layers value that makes an array to become dimensional array
+
+(access.data.by.position.array.example <- array(c(1:48),c(4,4,3)))
+# Let make some names
+rownames(access.data.by.position.array.example) <- paste("Row",
+  1:nrow(access.data.by.position.array.example))
+colnames(access.data.by.position.array.example) <- paste("Col",
+  1:nrow(access.data.by.position.array.example))
+(access.data.by.position.array.example)
+# You can see that ,,1 ,,2 ,,3 those are the layers 
+# If i would like to access 38. 38 is located in layer3 row 2 col 2
+(access.data.by.position.array.example[2,2,3])
+# If i would like to access 12, it is located in layer 1 row 4 col 3
+(access.data.by.position.array.example[4,3,1])
+# If i would like to access all the rows, first cols and all layer
+# object.names [ , 1 , ]
+(access.data.by.position.array.example[ ,1 , ])
+
+#####                   data frame                    #####
+# Lets talk about data frame.
+# Requirements:
+# all objects must be in vector format, all data types are allowed
+# all objects' vectors must have the same length
+# all objects' names must be unique
+# everything will be by col not row 
+# Example
+(ucsb.pstat10.name <- c("Jeff","Victor","Charlie","Sherman","James","Peter"
+                       ))
+(ucsb.pstat10.grade <- c(100,90,60,30,70,88))
+(uscb.pstat10.status <-c("International","Domestic","Domestic","International",
+                         "International","Domestic"))
+(ucsb.pstat10.year <-c("Junior","Freshman","Freshman","Senior",
+                       "Senior","Sosphmore"))
+(ucsb.pstat10.age <-c(28,18,20,16,30,21))
+(ucsb.pstat10.campus <- c("No","Yes","Yes","Yes","No","No"))
+# Now we can create a data frame
+# Note, according to our professor, he claims that the string vector will
+# convert to factors automatically. Mine wont do that. 
+# Probably because im using "R version 4.0.2 (2020-06-22)" a newer version of R
+# If you are using the server version R version 3.6.2 (2019-12-12)
+# you are using 3.6.2
+(pstat10.stats <- data.frame(ucsb.pstat10.name,
+                             ucsb.pstat10.age,
+                             ucsb.pstat10.grade,
+                             ucsb.pstat10.year,
+                             uscb.pstat10.status,
+                             ucsb.pstat10.campus,
+                             stringsAsFactors = F))
+# Assign some names for the data in columns
+(colnames(pstat10.stats) <- c("Name", "Age", "Grade","Year","Status",
+                              "Living on Campus"))
+(pstat10.stats)
+
+# Lets add another student
+(new.student <- c("Tiffany", 18, 99, "Freshman", "Domestic", "No"))
+
+# Recall, we can use rbind() function to add new student to the data frame
+# Before
+(pstat10.stats)
+# After
+(pstat10.stats <- rbind(pstat10.stats,new.student))
+
+# Same thing with cbind()
+# Before
+(pstat10.stats)
+(Sex <- c("M","M","F","M","M","M","F"))
+
+# After
+(pstat10.stats<-cbind(pstat10.stats, Sex))
+
+# Access data frame data is exactly the same thing with accessing element 
+# with matrix, because the back bone of data frame is matrix structure
+
+(pstat10.stats[5,2])
+
+# Get all grade
+(pstat10.stats$Grade)
+# Get row 1 all info
+(pstat10.stats[1,])
+
+# Display all grade that is above 90
+# Why logic at the row position?
+# because we want all the row that the grade is greater than 90, and print
+# all cols
+(pstat10.stats[pstat10.stats$Grade >=90, ])
+
+# What about print all the students that is above Junior or senior and living
+# on campus
+# (filtered.pstat10.stats <- pstat10.stats[((pstat10.stats$Year == "Junior" |
+#                                       pstat10.stats$Year =="Senior")
+#                           & pstat10.stats$`Living on Campus` == "Yes"), ])
+# The following code will check 3 things
+# 1: Student is a Junior
+# or
+# Student is a Senior
+# &
+# Students is living on campus 
+# Refresh the data frame and check who would fall in the constrain
+(pstat10.stats)
+# Well there is only Jeff, Sherman, and James fulfill either Junior or Senior
+# Lets check who live on campus
+# jeff does not live on campus, Sherman does live on campus, 
+# Lastly James does not live on campus
+# So we should expect Sherman's info will be printed on the screen
+# Note: we have a object pstat10.stats. and  if we want to access underneath 
+# The pstat10.stats, we need to use $ operator 
+(filtered.pstat10.stats <- pstat10.stats[((pstat10.stats$Year == "Junior" |
+                pstat10.stats$Year =="Senior")
+               & pstat10.stats$`Living on Campus` == "Yes"), ])
+# When filtering the data, you can see that the row number is incorrect.
+# because it is using the original row number from the data frame
+# in order to recreate a new one or at least in an acceding order
+# we can use rownames(object.name) <- NULL
+(rownames(filtered.pstat10.stats) <-NULL)
+(filtered.pstat10.stats)
+
+# Information about pstat10.stats
+(str(pstat10.stats))
+# Statistical information from pstat10.stats
+(summary(pstat10.stats))
+
+# Apply function(object, 1 = row / 2 = col, sum/mins...) 
+(mat <- matrix(c(1:9), 3,3,T))
+
+# This will add up all the values by row. row1 =# , row2 = #, row3 =#.
+# 1+2+3 = 6, 4+5+6 = 15, 7+8+9 = 24
+(apply(mat,1,sum))
+
+# Lets do by col
+# 1+4+7 = 12, 2+5+8 =15, 3+6+9 =18
+(apply(mat,2,sum))
+
+#####                   List()                    #####
+# Lets talk about the last data structure from PSTAT10
+# List()
+# List() is the most flexible data structures in R because
+# There is no restriction for list
+# It can be everything, and different length
+(height<-c(5.8,6.2,6.3,5.4))
+(age <- ucsb.pstat10.age)
+(list.array <- array(c(1:18),c(3,3,2)))
+(bullshit <- c("Not sure what to type"))
+(boolean <- c(T,T,F))
+(create.list<-list(height,age, list.array,bullshit,boolean))
+(names(create.list)<- c("Height","Age","some #","A sentence","Logic"))
+(create.list)
+# After creating a list, you can see that the list contains all type of data
+# It can be 3D (array with 2 layers), Logic, Character(sentence)
+# How to access the object?
+# We can check what object we have in the list
+(names(create.list)) 
+# Or
+(str(create.list))
+# If we would like to look at the array
+(create.list$'some #')
+# if we would like to look at the array at a specific location let say 13
+# to access a object with specific location use this structure
+# name.of.the.list$;'object.name"[row,col,layer]
+(create.list$'some #'[1,2,2])
+# We can also use the index of the object name
+(create.list[[3]][1,2,2])
+# If we would like to read all the age
+(create.list$Age)
+# Or using the index notation
+(create.list[[2]])
+
+# If we want to read the height and round it up
+(round(create.list$Height))
+
+# How about add 1 to each height?
+(round(create.list$Height) +1)
+
+# We can use cat to temporary add things at the back
+(cat(create.list[[4]],", dont you?"))
+
+# Another way to access a value, it only works for vector. not matrix, data frame
+(create.list[[c(2,1)]])
+
+
+# Lets create a small array
+(small.size.array.for.applyfunction <- array(c(1:8),c(2,2,2)))
+
+# Since array has layers, we need to define which layer or all layer as well
+# Lets add the first layer by row
+# Since we are working on all rows and cols, thats why it is empty for the 
+# First 2 positions.
+# Recall, array.object[row,col,layer]
+# If row / col / layer is empty, it implies that all possible row/col/layer
+(small.size.array.for.applyfunction <- array(c(1:8),c(2,2,2)))
+(apply(small.size.array.for.applyfunction[ , ,1],1,sum))
+
+# Lets try add by col, on layer 1
+(small.size.array.for.applyfunction <- array(c(1:8),c(2,2,2)))
+(apply(small.size.array.for.applyfunction[ , ,1],2,sum))
+
+# Since we have an option of choosing which layer, we can add all layer 
+# Lets try by row for all layer
+(small.size.array.for.applyfunction <- array(c(1:8),c(2,2,2)))
+# Expected ans 1+3+5+7 =16 , 2+4+6+8 =20
+(apply(small.size.array.for.applyfunction[ , , ],1,sum))
+
+# Some functions for vector, matrix or array
+# We can put an object in to ascending order by using
+  #sort(object.name) function
+(practice.sort.function <- c(9,12,145,13,2,1,25,123))
+(sort(practice.sort.function))
+
+# Reverse the entire vector 
+# rev(object.name)
+(rev(sort(practice.sort.function)))
+
+# Table(object.name)
+# Table will let you see the frequency of the values that have occurred 
+(table.vector <- c(1,1,1,2,2,3))
+(max(table(table.vector)))
+
+# unique(object.name)
+# Unique function is similar with levels without apply factor function
+# It remove all the duplicated values and return a unique data
+(unique.vector <- c(1,2,2,3,4,4,5,6,6,7,8,8,8,8,9,10))
+(unique(unique.vector))
+
+# We can use some math function to apply on vector
+# This will add each element together
+(vec)
+(sum(vec))
+# For example, we have a vector of 5, 10, 20, 40, 65
+# diff(object.name) will compare the next element, here is the formula
+# [n compare with n+1]. position 1 = [5 compare with 10]
+# Position 3 = [20 compare with 40]
+# This return as a vector as well and the length should be length(object.name)-1
+# Simply means if the length of the vector is 3, it will return only 2 numbers.
+# Because we are comparing two values each time. 
+(diff(test.diff <- c(5,10,20,40,65)))
+
+# Rounding a number round(object.name, number of decimal place)
+(round(3.56234))
+(round.vec <- c(3.134124,14124,235.23523,734.345634))
+(round(round.vec,4))
+
+# mean(object.name) mean = (Sum of all terms) / (number of terms)
+(vec)
+(mean(vec))
+
+# max(object.name) / min(object.name)
+# This will return the largest and the smallest number of a vector
+(vec)
+(max(vec))
+(min(vec))
+
+# median(object.name)
+# Odd terms (n)/2 , for even number length ((n/2) + ((n+1)/2)) 
+(vec)
+(median(vec))
+
+# mode(object.name) no such function but we can use table 
+(table.vector <- c(1,1,1,2,2,3))
+(table(table.vector))
+
+# There is a library can find the mode
+# We need to install statip 
+# install.packages("statip")
+
+# Load the library to the environment 
+library(statip)
+
+# This will return the value that has the highest frequency
+(mfv(table.vector))
+# The number of frequency it has occurred we can use max function with table
+(max(table(table.vector)))
+
+# range() function 
+(range.function.vector <- c(1:10))
+(range(range.function.vector))
+# As you can see RStudio does not calculate the range, instead they will
+# return the min and max. to get the range we need to use max - min function
+(max(range.function.vector)-min(range.function.vector))
+
+# 2 ways to get five number summary
+# quantile
+quantile.vector <- c(77,  79,  80,  86,  87,  87,  94,  99)
+(quantile(quantile.vector))
+# If we notice, it is actually a five number summary
+
+# Another way to get 5 number summary with median summary()
+(summary(quantile.vector))
+
+#####                   logic                   ##### 
+# Logic itself has it's own value
+# T  = 1 , F = 0
+
+# There are four operators for logic
+# &, && is refer to and 
+# |, || is refer to or 
+
+# A & B means both A and B have to be true in order to receive T
+# For example
+# We know that 1 < 2 so we expect (1<2) to return True
+(1<2)
+
+# We know that 2 < 3 so we expect (2<3) to return True
+(2<3)
+
+# So now we are comparing T & T. as we know & means both have to be True
+# In order for R to return True, let see the result is it as we expect
+(1<2) & (2<3)
+
+# Another example 
+# We know that 1 is smaller than 2 so it returns False
+# from previous example we know that (2<3) this should return T
+# So we F & T we should expect False
+(1>2) & (2<3) 
+
+# Lets do or   " | " 
+# As long as either side is true the logic will return T
+(1>2) | (2<3)
+
+# Lets talk about || and && 
+# it works just exactly the same as above, but,  it mostly use for comparing 
+# a large data set or a set of numbers, values, or something else
+
+(vector.for.logic.1 <- c(-1:1)) 
+(vector.for.logic.2 <- c(1:-1))
+(vector.for.logic.1>=0) && (vector.for.logic.2>=0)
+
+# Explanation
+
+# vector.for.logic.1 has the following vector
+#   -1    0   1
+# vector.for.logic.2 has the following vector
+#   1   0   -1
+
+
+(vector.for.logic.1>=0)
+
+(vector.for.logic.2>=0)
+
+# Since we have the operator as &, which means both A & B have to be 
+# T in order the comparison to return True 
+#                          set1      set2      set3
+#(vector.for.logic.1>=0)    F         T         T
+#(vector.for.logic.2>=0)    T         T         F
+
+# set 1: F & T will return F
+# set 2: T & T will return T
+# set 3: T & F will return F
+
+# Single &
+# Expected output is F T F if we are working on SINGLE &
+((vector.for.logic.1>=0) & (vector.for.logic.2>=0))
+
+# Double &&
+# But we are working DOUBLE &&, so we are only COMPARING the FIRST set
+((vector.for.logic.1>=0) && (vector.for.logic.2>=0))
+
+# Like wise, for || operator. A || B means either side has to be True then the
+# Comparison will return T
+# So the first set is F || T, since or only requires one side to be T, 
+# So we expected it to return T
+((vector.for.logic.1>=0) || (vector.for.logic.2>=0))
+
+# Last symbol for logic
+# ! this dude means is not
+# If i have !F which means it is not F then we are simply saying True
+(!F)
+(!T)
+
+#####                   Factor                    #####
+# Factor is a vector, and it will generates levels automatically in a sorted 
+# vector. After applying factor, the data structure becomes factor so do levels.
+(num.vec <- c(rep(5:1,3)))
+(fac.num.vec<- factor(num.vec))
+
+# We can also set the level in ordered form, it will display smallest to largest
+(fac.num.vec <- factor(num.vec, ordered= T))
+# Lets try character
+(char.vec <- c(rep(letters[5:1],3)))
+(fac.char.vec<- factor(char.vec))
+# Set ordered = T
+(fac.char.vec <- factor(char.vec,ordered=T))
+
+# We can check the levels by using levels() function
+(levels(fac.num.vec))
+# We can also replace the values to something else
+# Lets use factor.char.vector as example.
+# Order does matter in this case. Corresponding new values will also change
+# the both levels and factor vector since they are hooked together.
+
+# Before
+(levels(fac.char.vec))
+# After
+(levels(fac.char.vec)<- c("1","2","3","4","5"))
+
+# Accessing element in levels are the same as vector
+# It will not only return the element in the vector but also the entire levels
+(fac.num.vec)
+(fac.num.vec[3])
+
+# Range of values 
+(fac.num.vec[3:8])
+
+# If you have a string vector
+# If will go by alphabet order 
+(string.vec <- c("and","ant","aapl"))
+(factor(string.vec,ordered=T))
+
+# You can also define the levels by yourself.
+(coffee.char <- c("tall","tall", "grande", "venti", "tall"))
+(coffee.fac <- factor(x=coffee.char))
+(coffee.size <- c("tall", "grande", "venti", "trenta"))
+(coffee.fac <- factor(x=coffee.char, levels=coffee.size, ordered=T))
+# If you have something in side a factor that is not part of the levels,
+# It will display NA, because it cant find the value from levels
+(coffee.char1 <- c("tall","tall", "UCSB", "grande", "venti", "tall"))
+(coffee.size1 <- c("tall", "grande", "venti", "trenta"))
+(coffee.fac1 <- factor(x=coffee.char1, levels=coffee.size, ordered=T))
+
+# cut() functions, and breaks
+# Brackets ( ), [ ), ( ]
+
+(bracket.vec<- c(1:20))
+(breakPoint <- c(0,5,10,15,20))
+# We will use cut to split the data in to groups, it depends on the breaks
+# data. In my case my breakPoint has 0, 5, 10, 15, 20. So i will have 4 levels
+# (0,5], and (5,10]
+# Apply cut() 
+(levels(cut(bracket.vec,breaks=breakPoint)))
+# By default right = T, (  ]. The upper bound values are closed,
+# lower bound values are opened. right =T is the environment setting.
+
+# If we set right = F, that means we will set all my lower bound bracket to be
+# closed and upper bound brackets to open
+(levels((cut(bracket.vec,breaks=breakPoint,right=F)))) # right = F [ )
+
+
+# include.lowest by default is F. It is the same as right = T
+# include.lowest only has effect on the first level
+(levels((cut(bracket.vec,breaks=breakPoint,include.lowest =F))))
+
+# include.lowest by default is F. It is the same as right = F
+# include.lowest only has effect on the first level
+(levels((cut(bracket.vec,breaks=breakPoint, right =F,include.lowest =F))))
+
+# If I set my include.lowest = T
+(levels(cut(bracket.vec,breaks=breakPoint,include.lowest =T)))
+# Lowest interval, both brackets are closed, so all the lowest data will be
+# Included depends on my breaking point. 
+# In my case my breaking points is 0 , 5 , 10 ,20
+# So [0,5] will be included.
+
+# If i set right = F, which means my left brackets are included for ALL values
+(levels(cut(bracket.vec,breaks=breakPoint,right=F, include.lowest =T)))
+# right = F [ , ) include.lowest = T [ , ) [, )
+#we can also add names for the levels
+#example with test scores
+(scores.vec <- c(30,55,65,70,88,92,96))
+(breakPoints <-c(0,60,70,80,90,100))
+lab <-rev(c("F","D","C","B","A"))
+(cut(scores.vec,
+     breaks=breakPoints,
+     right =F,
+     include.lowest = T,
+     labels= lab     
+     ))
+#now i have converted all the grades from numbers to Letter Grade
+#this part is confusing, read thru it couple times 
+# lets put it in table 
+#                    right         include.lowest         levels output
+# Default value         T             F                   ( , ] ( , ] ... 
+#                       F             F                   [ , ) [, ) ...
+#                       T             T                   [ , ] ( , ]...
+#                       F             T                   [ , ) [ , )...
+
+# Lets talk about how to read files
+# Lets import a build in data
+data(iris)
+
+# Doesn't matter if it is a build in data or external data.
+# It is slightly difference, because you need to read a file
+# like df <- read.csv('filename')
+# But other than that it is the same exact thing
+
+# If you are working on billion rows and cols of data it is good to know
+# What does the file contains like objects' names, variables, number of col/row
+(str(iris))
+
+# Now we know that there are 150objects and 5 variables
+# 150 objects mean 150 rows and 5 cols
+# We can verify by using dim
+(dim(iris))
+
+# Lets read the first few rows of the data
+(head(iris))
+# The default values for the head(object.name) function is 6
+# If you want to read the first 2 rows, set n = the.number.of.rows
+(head(iris, n=2))
+# We can use tail(object.name) function to read the last few rows of the data
+(tail(iris,n=2))
+
+# Replacing value A to value B 
+(name.vector <- c("Jeff", "James","Victor","Kitty"))
+(sub("James","James Bond",name.vector))
+
+#sub all values that is A from B. by gsub
+(name.vector <- rep(name.vector,3))
+(gsub("Kitty", "Spider Man", name.vector))
+
+
+#####                   Tipple                    #####
+#1: Tipple is similar to data frame. 
+#2: Tipple has less functions than data frame string to factors
+#     string to factors, it has never happened on me
+#3: Tibble data must have the same length 
+#4: you need tibble package to use tibble function
+#5: Tibble only recycle vector of length 1
+#6: Tibble accepts non standard names like special naming like < ! something
+#7: Tibble is very sensitive. so one tiny mistake will throw you an error
+library(tibble)
+
+# You can convert data frame to tipple by as_tibble(object.name)
+(class(iris)) #from data frame 
+# By default tibble will only print the first 10 rows
+(as_tibble(iris)) # to tibble 
+
+# enframe(object.name) : convert vector to a tibble
+(is.vector(people <- c("john", "Susan","mo", "Judy", "john")))
+(is_tibble(people.tb<- enframe(people)))
+(people.tb)
+# Create a tibble tibble(object.name)
+(num <-c(25:30))
+(weight <-c(120,130,150,160,170,180))
+(name.tb <- c("J","C","K","Y","T","P"))
+(sign.tb<- c("<3","<3","<3","<3","<3","<3"))
+(tb <- tibble(
+    '1.age'= num,
+    '2.weight' = weight,
+    '3.name' = name.tb,
+    '<3' = sign.tb
+))
+# In tibble ' ' and ` ` are the same thing.
+(tb1 <- tibble(
+  `1.age`= num,
+  `2.weight` = weight,
+  `3.name` = name.tb,
+  `<3` = sign.tb
+  ))
+# You can hand build a tibble as well 
+(tribble(
+  ~x, ~y, ~z,
+  #--|--|----
+  "a", 2, 3.6,
+  "b", 1, 8.5
+))
+# Other useful tibble functions
+# is_tibble(object.name): check if object is a tibble
+# add_row(object.name): to add a row to your tibble
+# add_col(object.name): to add a col to your tibble
+# has_name(object.name): to check if a tibble has a particular variable
+# skim(object.name): similar to summary(object.name) function, but skim()
+# has more info than summary(object.name)
+
+# Some math problems
+# Following will display 0, calculus 1 finding limit rules will apply here 
+(805/Inf)
+(101/-Inf)
+(805/Inf)
+(101/-Inf)
+
+# Following will display NaN
+(0/0)
+(Inf/Inf)
+(-Inf + Inf)
+
+#####                   missing values                    #####
+# NA: some values are missing and it suppose the NA should be there
+# na.omit(object.name) , drop all the na values 
+# is.na(object.name)  check if it has na value 
+# write.csv(my.df, file="name.csv")
+# read.csv(file="my.csv")
+
+# Lets work with airquality file 
+data("airquality")
+(str(airquality))
+# Read the first 15 rows
+(head(airquality, n=15))
+# As you can see there are few NA values in the data set
+# is.na(object.name) will return if it contains NA at the row and col 
+# our last row has no NA in it
+(tail(airquality,n=1))
+(is.na((tail(airquality,n=1))))#so it returns False all across the board
+
+# Professor uses all. it doesnt make sense when the logic returns is false
+# so i use any. any will check if there are any value that is Na
+# if there is NA, it returns T
+(head(airquality,n=5))#there are NA for the first 5 rows
+(any(is.na(head(airquality,n=5))))#this will returns T
+(all(is.na(head(airquality,n=5))))#this returns F so it doesnt make sense to me
+
+(tail(airquality,n=1))#there are no Na for the last row
+(any(is.na(tail(airquality,n=1))))#so this should returns F
+
+# When there are values representing by NA, we cannot graph it, so na.omit
+# kicks in. It will skip all the NA values, unless you assign it to a new
+# object. Then the new object will have no NA values in it.
+# the original airquality has 153 rows
+(str(airquality))
+# After na.omit, it has only 111
+(str(airquality.no.na <- na.omit(airquality)))
+
+# We can also find mean or median
+# this returns NA because the data contains NA
+mean(airquality$Ozone) 
+# To calculate the mean with NA use na.rm=T, na.rm will skip all the NA values
+mean(airquality$Ozone, na.rm=T)
+
+# Now we have create a data frame. we can write it to a csv file 
+# and save it to out desktop. Before writing a file, knowing your working
+# directory is very important. Otherwise you wont know where did you save your
+# file
+(getwd())
+# Now you know what is your directory, you can save it directly.
+# but i do like to save it on my desktop 
+write.csv(airquality.no.na,file ="/Users/jeffreychan/Desktop/airquality.no.na.csv")
+
+# You can also set your working directory path as well, if you are not familiar
+# with your path or how to set it, just use your current directory. 
+
+# setwd("path")
+
+filtered.data.airquality <-read.csv("/Users/jeffreychan/Desktop/airquality.no.na.csv")
+(head(filtered.data.airquality,n=5))
+
+#####                     Graphing                    #####
+# histogram
+# Lets create some data sample(object.name) is a function that generates number.
+# If I set replace =T, i will able generate the same number again
+
+# Let do a experiment. We roll a dice 50 times and see what we can do
+(roll.dice.sample <- sample(1:6,50,replace =T))
+hist(roll.dice.sample)
+# As you can see, hist() has a default value of y axis as frequency
+# x axis is your data
+# Change the color of the bin and do some labeling
+# xlim = c(lower bound, upper bound), ylim = c(lower bound, upper bound)
+# Are the function to set the x axes or y axes highest value
+(hist(roll.dice.sample, 
+     col = "darkgrey",
+     xlab="Dice Number",
+     ylab = "Freq",
+     border = "purple",
+     main = "Dice number distribution",
+     ylim = c(0,20)
+     ))
+# We can also apply the break point as well, but it wont makes sense in our case
+# because we need to know each number's frequency not a range of frequency 
+
+# Let work on boxplot with our data, airquality that is filtered earlier guide
+filtered.data.airquality <-read.csv("/Users/jeffreychan/Desktop/airquality.no.na.csv")
+(str(filtered.data.airquality))
+# Lets plot day on the x axes, and Temp on the y
+# boxplot( y ~ x, data = , xlab = " ", ylab = " ", col = " ")
+
+# Attach function
+# attach(object.name) is very useful when you have alot of variables
+# keep in mind, if you have the same variable name already in the environment, 
+# it will have error. Make sure you have unique naming
+# For example
+attach(filtered.data.airquality)
+(str(filtered.data.airquality))
+# We know that we have Ozone in filtered.data.airquality without attach function
+# We will have to use $ operation or bracket [] operation
+(head(filtered.data.airquality$Ozone, n=5))
+
+# Since we have use attach function we can simply call the variable name
+(head(Ozone, n=5))
+
+(boxplot(filtered.data.airquality$Temp ~ filtered.data.airquality$Day,
+         col="darkgrey",
+         xlab = "Day",
+         ylab = "Temp",
+         border = "red",
+         ylim = c(min(Temp)-10,max(Temp)+10)
+         ))
+# It doesn't make to much of a sense to have that much of boxplots on one graph 
+# But you will get the point of setting things up
+
+# Lets work with barplot with mtcars data
+data(mtcars)
+# Remember, table is help you to count things
+(table(mtcars$gear))
+# 15 vehicles have 3 gears, 12 vehicles have 4 gears, 
+# and 5 vehicles have 5 gears
+(barplot(table(mtcars$gear), col= "darkgrey", xlab = "Gear",
+  ylab= "Number of vehicles", main = "Gear Distribution",
+  names.arg = c("3 Gears","4 Gears","5 Gears")
+  ))
+
+# Pie char
+percent <- c(20,10,18,4,22,12,14)
+pie.col <- c("darkslateblue", "darkslategray2", "darkorange",
+             "darkgreen","black")
+# We dont use pie chart at all because it sucks 
+(pie(percent,col = pie.col))
+
+# Last function for graphing par(mfrow =c(row, col))
+# par(mfrow=c(row, col)) will allow you to set number of graphs in a row
+# and how many cols in a graph
+# if you would like to have 3 by 3 graph
+# par(mfrow= c(3,3)) will do
+
+# Statistic concepts
+
+# Working sample 
+
+x <- c(0,1,2,3,4)
+find.X <- c(0.07, 0.20, 0.38, 0, 0.13)
+get.value <- 1-sum(find.X)
+find.X[4]<- get.value
+final.value.X <- find.X
+final.value.X
+barplot(final.value.X~x, col="darkgrey", xlab= "Number of Children in a Family",
+        ylab = "Number of Dependent Children in the house holds",
+        main = "Probability Distribution for the number of child in a family",
+        ylim = c(0, 0.40)
+        )
+(cdf<-cumsum(final.value.X))
+barplot(cdf, x, xlab= "Number of Children in a Family",
+        ylab = "Probability",
+        main = "Cumulative Probability Distribution for number of kids",
+        names.arg = as.character(x)
+        )
+
+# lty is the broken line setting 
+# lwd is the line width
+plot(x,cdf,'b', main = "CDF of Number of Dependent Child in the households",
+     lwd =2, col = "black")
+(expected.value.num.kids <- sum(x*final.value.X))
+(variance.num.kids <- (sum(((x-expected.value.num.kids)^2)*(final.value.X))))
+(sd.num.kids <- sqrt(variance.num.kids))
+
+#####                   binomial distribution                    #####
+
+# Flip a fair coin 10 times, probability of getting 4 heads =?
+# P(X=4) dbinom(x, n, p)
+(dbinom(0:4,10,0.5))
+(dbinom(4,10,0.5))
+
+# Create a pmf function which means x= 0, 1, 2, 3, 4
+(pmf.4.heads <- dbinom(0:4,10,0.5))
+# Give the pmf the title
+(names(pmf.4.heads) <- c(0:4))
+(pmf.4.heads)
+
+# Create a cdf P(X<= 4)
+(pdf.at.most.4 <- pbinom(4,10,0.5))
+
+# Probability to get between 5 or 8 heads P(X = 5) + P(X = 6) +P(X = 7)+P(X = 8)
+(sum(dbinom(5:8,10,0.5)))
+
+# Using pbinom()
+# IMPORTANT, ( 5 <= x <= 8)
+# so P(X<=8)- P(X<=4) = P(5 <= x <= 8)
+(pbinom(8,10,0.5)-pbinom(4,10,0.5))
+
+# Probability that P(X>= 7)
+# P(x = 7) + P(x = 8) +  P(x = 9) + P(x = 10)
+(sum(dbinom(7:10,10,0.5)))
+
+# pbinom(6, 10,0.5, F), when i set lower.tail to F,
+# lower.tail	logical; if TRUE (default), probabilities are P[X ≤ x],
+# otherwise, P[X > x].
+# it means that P(x>6), so this will help us to get P(X>=7)
+(pbinom(6, 10,0.5, F))
+
+# so if i want P(x>=8), i would have to use 7, P(x>7) to find 
+# P(x>=8) = P(x=8) + P(x=9) + P(x=10)
+(pbinom(7,10,0.5,F))
+(sum(dbinom(8:10,10,0.5)))
+
+# So if i would like to get
+# P(x<= 6) = P(x=0) + P(x=1) + P(x=2) + P(x=3) + P(x=4) + P(x=5) + P(x=6)
+(sum(dbinom(0:6,10,0.5)))
+(pbinom(6, 10,0.5))
+
+# Possible exam problem
+# Suppose we manage a large manufacturing plant that produces thneeds. To 
+# manufacture our thneeds, we take delivery of large shipments of truf-a-la
+# trees. To ensure quality control standards are met, we will take a sample of 
+# 5 trees and reject the shipment if more than one tree fails inspection.
+# Historically, 17% of trees do not pass inspection. WHat is the probability we
+# send the shipment back.
+
+# Note, we want probability that is <= 1
+# So, what is the probability that less than 1 tree will not pass the inspection
+# fails: P(x<=1) 
+# sample size: 5
+# prob = .17 do not pass inspection
+# dbinom(1,5,0.17)
+# The following code means probability getting at most 1 fails 
+# so i will have  
+(pbinom(1,5,0.17))
+
+# The following code means probability getting at least 2 fails 
+(1-(pbinom(1,5,0.17)))
+# lower.tail = F means 
+# P(x>=2) + P(x>=3) + P(x>=4)
+# Following code means probability of sending the shipment back
+
+(pbinom(1,5,0.17,F))
+
+# Continuous random variable 
+# Uniform Distribution
+# X ~ Unif(a,b)
+# a<= x <= b 0<= x <= 5
+# 1/b-a = 1/5  = 0.2
+# X ~ Unif(0,5)
+# What is the probability that customers will order less than 2 gallons of
+# guacamole? 
+# Uniform does not have any value at one specific point. so it has to be
+# given a range 
+# height dunif(x,min,max)
+# CDF: punif(x, min, max,lower.tail =T )
+# quantile: qunif(x,min,max, lower.tail =T)
+# runif(n,min=0,max=1)
+n<-5
+min <- 0
+(punif(2,0,5))
+# Probability that customers will order between 1 and 3 gallons of guacamole 
+(punif(2,min,n))
+
+# What is the probability that customers will order either less than 2 gallons
+# or more than 4 gallons of guacamole?
+# P(x < 2 U x > 4)
+(punif(2,min,n)+punif(4,min,n,F))
+```
+
