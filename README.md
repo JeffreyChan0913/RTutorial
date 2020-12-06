@@ -8,8 +8,14 @@ Since some of the codes are quite long, thats the reason why I knit it to .html.
 
 You can download the .html for review or you can use the .rmd to see the code.
 
-I would suggest either beginner or refresher to download the .html
+For the best result or format, simply download the .html and go thru all the lines.
+
+Recommendation: 
 
 For beginner, understand the code and work it on your RStudio. 
 
 For refresher, i would just simply search thru the function and see what do you need. 
+
+If you would like to go deeper, you can just simply find a book specifically for R to learn the concepts, but in general, i dont think you will need to go that deep. Since R is specifically for statistics purposes nor for software engineering. Therefore, this guide should cover 80-90% of what you need for R portion.
+
+This material will not cover the ggplot or something, but it does cover the base R. 
